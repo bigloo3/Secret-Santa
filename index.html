@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Secret Santa Picker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: linear-gradient(135deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #fff;
+      text-align: center;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    select, button {
+      padding: 10px 15px;
+      margin: 10px 0;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      cursor: pointer;
+      background-color: #ff4757;
+      color: white;
+      border: none;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #ff6b81;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    img {
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+    h2 {
+      color: #fff;
+      text-shadow: 2px 2px 4px #000;
+    }
+  </style>
+</head>
+<body>
+  <h2>Select Your Name</h2>
+  <select id="nameSelect">
+    <option value="">-- choose --</option>
+    <option>Luiso</option>
+    <option>Kevin</option>
+    <option>Jose</option>
+    <option>Jack</option>
+    <option>Betim</option>
+    <option>Misael</option>
+    <option>Ronaldo</option>
+    <option>Bogoni</option>
+    <option>Andy</option>
+    <option>Junior</option>
+  </select>
+  <br>
+  <button onclick="reveal()">Reveal My Match</button>
+  <div id="result"></div>
+
+  <script>
+    const assignments = {
+      "Luiso": "Ronaldo",
+      "Kevin": "Jose",
+      "Misael": "Andy",
+      "Jose": "Kevin",
+      "Jack": "Junior",
+      "Betim": "Luiso",
+      "Ronaldo": "Betim",
+      "Bogoni": "Jack",
+      "Andy": "Bogoni",
+      "Junior": "Misael"
+    };
+
+    function reveal() {
+      const name = document.getElementById('nameSelect').value;
+      if (!name) return;
+      const resultDiv = document.getElementById('result');
+      const gifUrl = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGV1eXc5NXhqNHF2MHI5dnZzM3VmMzF1NWh4M3I4djU3cGRtNWxnZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/f3e3vLxB7TOuIxDVrX/giphy.gif";
+      resultDiv.innerHTML = `You got: ${assignments[name]}<br><img src="${gifUrl}" width="200" />`;
+    }
+  </script>
+</body>
+</html>
