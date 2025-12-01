@@ -18,6 +18,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      overflow: hidden; /* Needed for snowflakes */
     }
 
     /* Overlay for text readability */
@@ -38,6 +39,8 @@
       font-size: 1em;
       border-radius: 5px;
       border: 1px solid #ccc;
+      position: relative;
+      z-index: 2;
     }
 
     button {
@@ -60,6 +63,8 @@
       padding: 15px;
       border-radius: 10px;
       display: inline-block;
+      position: relative;
+      z-index: 2;
     }
 
     img {
@@ -70,6 +75,27 @@
     h2 {
       color: #fff;
       text-shadow: 2px 2px 4px #000;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Snowflake style */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) translateX(0); opacity: 1; }
+      100% { transform: translateY(100vh) translateX(50px); opacity: 0; }
     }
   </style>
 </head>
@@ -113,6 +139,25 @@
       const gifUrl = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGV1eXc5NXhqNHF2MHI5dnZzM3VmMzF1NWh4M3I4djU3cGRtNWxnZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/f3e3vLxB7TOuIxDVrX/giphy.gif";
       resultDiv.innerHTML = `You got: ${assignments[name]}<br><img src="${gifUrl}" width="200" />`;
     }
+
+    // Snowflake generator
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.textContent = '❄'; // Snowflake character
+      snowflake.style.left = Math.random() * window.innerWidth + 'px';
+      snowflake.style.fontSize = (Math.random() * 20 + 10) + 'px';
+      snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      document.body.appendChild(snowflake);
+
+      // Remove snowflake after animation
+      setTimeout(() => {
+        snowflake.remove();
+      }, parseFloat(snowflake.style.animationDuration) * 1000);
+    }
+
+    // Generate snowflakes continuously
+    setInterval(createSnowflake, 200);
   </script>
 </body>
 </html>
