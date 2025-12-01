@@ -7,18 +7,19 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
       padding: 20px;
       color: #fff;
       text-align: center;
       min-height: 100vh;
       position: relative;
-
-      /* Background image */
+      
+      /* Responsive background */
       background-image: url('house.png');
-      background-size: cover;
-      background-position: center;
+      background-size: contain;        /* Ensure whole image fits */
+      background-position: top center; /* Focus on top part of image */
       background-repeat: no-repeat;
-      overflow: hidden; /* Needed for snowflakes */
+      overflow: hidden;
     }
 
     /* Overlay for text readability */
@@ -33,14 +34,22 @@
       z-index: -1;
     }
 
+    /* Semi-transparent card for picker */
+    .picker-card {
+      background: rgba(0,0,0,0.5);
+      padding: 20px;
+      border-radius: 15px;
+      display: inline-block;
+      z-index: 2;
+      position: relative;
+    }
+
     select, button {
       padding: 10px 15px;
       margin: 10px 0;
       font-size: 1em;
       border-radius: 5px;
       border: 1px solid #ccc;
-      position: relative;
-      z-index: 2;
     }
 
     button {
@@ -97,26 +106,49 @@
       0% { transform: translateY(0) translateX(0); opacity: 1; }
       100% { transform: translateY(100vh) translateX(50px); opacity: 0; }
     }
+
+    /* Responsive tweaks for mobile */
+    @media (max-width: 600px) {
+      body {
+        background-size: cover;
+        background-position: center top;
+      }
+
+      h2 {
+        font-size: 1.5em;
+      }
+
+      select, button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+      }
+
+      .picker-card {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
-  <h2>Select Your Name</h2>
-  <select id="nameSelect">
-    <option value="">-- choose --</option>
-    <option>Luiso</option>
-    <option>Kevin</option>
-    <option>Jose</option>
-    <option>Jack</option>
-    <option>Betim</option>
-    <option>Misael</option>
-    <option>Ronaldo</option>
-    <option>Bogoni</option>
-    <option>Andy</option>
-    <option>Junior</option>
-  </select>
-  <br>
-  <button onclick="reveal()">Reveal My Match</button>
-  <div id="result"></div>
+  <div class="picker-card">
+    <h2>Select Your Name</h2>
+    <select id="nameSelect">
+      <option value="">-- choose --</option>
+      <option>Luiso</option>
+      <option>Kevin</option>
+      <option>Jose</option>
+      <option>Jack</option>
+      <option>Betim</option>
+      <option>Misael</option>
+      <option>Ronaldo</option>
+      <option>Bogoni</option>
+      <option>Andy</option>
+      <option>Junior</option>
+    </select>
+    <br>
+    <button onclick="reveal()">Reveal My Match</button>
+    <div id="result"></div>
+  </div>
 
   <script>
     const assignments = {
@@ -144,19 +176,17 @@
     function createSnowflake() {
       const snowflake = document.createElement('div');
       snowflake.classList.add('snowflake');
-      snowflake.textContent = '❄'; // Snowflake character
+      snowflake.textContent = '❄';
       snowflake.style.left = Math.random() * window.innerWidth + 'px';
       snowflake.style.fontSize = (Math.random() * 20 + 10) + 'px';
       snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
       document.body.appendChild(snowflake);
 
-      // Remove snowflake after animation
       setTimeout(() => {
         snowflake.remove();
       }, parseFloat(snowflake.style.animationDuration) * 1000);
     }
 
-    // Generate snowflakes continuously
     setInterval(createSnowflake, 200);
   </script>
 </body>
